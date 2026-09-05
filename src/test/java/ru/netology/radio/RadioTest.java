@@ -5,7 +5,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RadioTest {
 
-    // --- Тестирование радиостанций ---
+    // Тесты конструкторов и подсчёта станций
+
+    @Test
+    public void shouldInitDefaultStationsCount() {
+        Radio radio = new Radio();
+        assertEquals(10, radio.getStationsCount());
+    }
+
+    @Test
+    public void shouldInitCustomStationsCount() {
+        Radio radio = new Radio(15);
+        assertEquals(15, radio.getStationsCount());
+    }
+
+    //Тесты радиостанций (стандартные 10 станций)
 
     @Test
     public void shouldSetValidStation() {
@@ -29,7 +43,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSwitchToNextStation() {
+    public void shouldNextStation() {
         Radio radio = new Radio();
         radio.setCurrentStation(5);
         radio.next();
@@ -37,7 +51,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSwitchToNextStationFromMax() {
+    public void shouldNextStationFromMaxToZero() {
         Radio radio = new Radio();
         radio.setCurrentStation(9);
         radio.next();
@@ -45,7 +59,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSwitchToPrevStation() {
+    public void shouldPrevStation() {
         Radio radio = new Radio();
         radio.setCurrentStation(5);
         radio.prev();
@@ -53,14 +67,32 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSwitchToPrevStationFromMin() {
+    public void shouldPrevStationFromZeroToMax() {
         Radio radio = new Radio();
         radio.setCurrentStation(0);
         radio.prev();
         assertEquals(9, radio.getCurrentStation());
     }
 
-    // --- Тестирование громкости ---
+    // Тесты радиостанций (кастомное количество станций)
+
+    @Test
+    public void shouldNextStationCustomCount() {
+        Radio radio = new Radio(30);
+        radio.setCurrentStation(29);
+        radio.next();
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void shouldPrevStationCustomCount() {
+        Radio radio = new Radio(30);
+        radio.setCurrentStation(0);
+        radio.prev();
+        assertEquals(29, radio.getCurrentStation());
+    }
+
+    // Тесты уровня громкости (0–100)
 
     @Test
     public void shouldSetValidVolume() {
